@@ -39,11 +39,47 @@ CREATE TABLE vaccineStat (
     numVacInfections INT UNSIGNED DEFAULT 0 NOT NULL
 );
 
+CREATE TABLE organizations (
+    orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    oName VARCHAR(60),
+    otype ENUM('Government','Research Center','Company')
+   
+);
+
+CREATE TABLE users (
+    uID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    orgID INT UNSIGNED, 
+    cID INT UNSIGNED,
+    FOREIGN KEY (cID)
+        REFERENCES country (cID),
+    fName VARCHAR(60) DEFAULT 'N/A',
+    lName VARCHAR(60) DEFAULT 'N/A',
+    phone INT UNSIGNED,
+    email VARCHAR(100) DEFAULT 'empty',
+    privilege ENUM('Administrator', 'Researcher', 'Organization Delegate', 'Regular'),
+    dob DATE
+);
+CREATE TABLE article (
+    aID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    uID INT UNSIGNED,
+    FOREIGN KEY (uID)
+        REFERENCES users (uID),
+    Author VARCHAR(90) NOT NULL,
+    majorTopic VARCHAR(90) DEFAULT 'N/A',
+    minorTopic VARCHAR(90) DEFAULT 'N/A',
+    summary CHAR(100) DEFAULT 'empty',
+    content BLOB,
+    pubDate DATE NOT NULL
+);
+
+
+
+
 
 show tables
-DROP TABLE country, covid_19stat,region,vaccines,vaccineStat
+DROP TABLE country, covid_19stat,region,vaccines,vaccineStat, organizations, users, article
 
 SELECT *
-From vaccineStat
+From users
 
 desc country

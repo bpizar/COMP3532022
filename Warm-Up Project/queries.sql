@@ -57,5 +57,33 @@ WHERE
 
 
 
+--3.vi
+SELECT pubDate, author, majorTopic, minorTopic, summary
+FROM article 
+WHERE author = 'Joe Smith'
+ORDER BY pubDate ASC;
+
+--3.vii
+SELECT MAX(pubDate), author, majorTopic, minorTopic, summary
+FROM article
+WHERE author = 'Joe Smith';
+
+--3.viii
+SELECT privilege, oName, fName, lName, email, phone, dob, country.cName AS Citizenship
+FROM ((users INNER JOIN country ON users.cID = country.cID) 
+                LEFT JOIN organizations ON users.orgID = organizations.orgID)
+ORDER BY privilege ASC, cName ASC, dob ASC;
+
+--3.x
+SELECT fName, lName, email, phone, dob, country.cName AS Citizenship
+FROM ((users 
+        INNER JOIN country ON users.cID = country.cID) 
+        LEFT JOIN article ON users.uID = article.uID)
+WHERE users.privilege = 'Researcher'  
+GROUP BY users.uID, Citizenship
+HAVING (COUNT(article.uID) = 0)
+ORDER BY Citizenship ASC, users.uID ASC;
+
+
 
 
