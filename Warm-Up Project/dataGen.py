@@ -39,10 +39,10 @@ first = True
 for region in regions:
     for country in regionDict[region]:
         if first:
-            f.write(f"(NULL,{regionID[region]},\'{country}\',{countryPop[country]})")
+            f.write(f"(NULL,{regionID[region]},{countries.index(country)+1},\'{country}\',{countryPop[country]})")
             first = False
         else:
-            f.write(f",\n(NULL,{regionID[region]},\'{country}\',{countryPop[country]})")
+            f.write(f",\n(NULL,{regionID[region]},{countries.index(country)+1},\'{country}\',{countryPop[country]})")
 f.write(";\n\n")
 
 
