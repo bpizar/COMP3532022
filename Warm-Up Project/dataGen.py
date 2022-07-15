@@ -51,7 +51,7 @@ f.write("INSERT INTO vaccines VALUES\n(NULL,\'Pfizer\'),\n(NULL,\'Moderna\'),\n(
 
 
 #generating covid 19 statistics
-# 77 countries, we will generate around 10 statistics per country
+# 95 countries, we will generate around 10 statistics per country
 countryNumInfections = []
 countryNumDeaths = []
 for x in range(len(countries)):
@@ -78,7 +78,7 @@ for statID in range(10*len(countries)):
         f.write(f",\n(NULL,{i+1},\'{date}\',{countryNumInfections[i]},{countryNumDeaths[i]})")
 f.write(";\n\n")
 
-#Inserti
+
 f.write("\n\nINSERT INTO vaccinestat VALUES\n")
 first = True
 for x in range(10*len(countries)):
