@@ -2,14 +2,21 @@ CREATE TABLE region (
     rID INT UNSIGNED NOT NULL PRIMARY KEY,
     rName VARCHAR(90) NOT NULL
 );
+CREATE TABLE organizations (
+    orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    oName VARCHAR(60),
+    otype ENUM('Government','Research Center','Company')
+   
+);
 
 CREATE TABLE country (
     cID INT UNSIGNED AUTO_INCREMENT,
     rID INT UNSIGNED,
+    FOREIGN KEY (rID) 
+    	REFERENCES region(rID),
     orgID INT UNSIGNED,
     FOREIGN KEY (orgID)
         REFERENCES organizations (orgID),
-    FOREIGN KEY (rID) REFERENCES region(rID),
     PRIMARY KEY(cID,rID),
     cName VARCHAR(90) NOT NULL,
     Population INT UNSIGNED NOT NULL
@@ -41,12 +48,6 @@ CREATE TABLE vaccineStat (
     numVacInfections INT UNSIGNED DEFAULT 0 NOT NULL
 );
 
-CREATE TABLE organizations (
-    orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    oName VARCHAR(60),
-    otype ENUM('Government','Research Center','Company')
-   
-);
 
 CREATE TABLE users (
     uID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
