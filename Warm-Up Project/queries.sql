@@ -42,6 +42,26 @@ FROM
     WHERE rName = 'Americas'
     GROUP BY vaccines.name
     ORDER BY Deaths ASC;
+--3.iv
+SELECT 
+    newBag.rName,
+    newBag.totalPopulation AS totalPopulation,
+    newBag.totalResearchers AS totalResearchers,
+    AVG(newBag.totalResearchers),
+    (newBag.totalResearchers * 100)/newBag.totalPopulation AS researchersOverPop
+FROM
+    (SELECT 
+        rName,
+		SUM(Population) AS totalPopulation,
+		COUNT(region.rID) AS totalResearchers
+    FROM
+        (region
+    INNER JOIN country ON region.rID = country.rID)
+    INNER JOIN users ON country.cID = users.cID
+    WHERE privilege = 'Researcher'
+    GROUP BY region.rID) AS newBag
+
+GROUP BY newBag.rName; 
 
 -- 3.v
 SELECT 
@@ -73,6 +93,32 @@ SELECT privilege, oName, fName, lName, email, phone, dob, country.cName AS Citiz
 FROM ((users INNER JOIN country ON users.cID = country.cID) 
                 LEFT JOIN organizations ON users.orgID = organizations.orgID)
 ORDER BY privilege ASC, cName ASC, dob ASC;
+--3.ix
+SELECT 
+    newBag.fName,
+    newBag.lName,
+    newBag.email,
+    newBag.phone,
+    newBag.dob,
+    newBag.cName,
+    newBag.totalArticles,
+    MAX(newBag.totalArticles)
+FROM
+    (SELECT 
+			rID,
+            fName,
+            lName,
+            email,
+            phone,
+            dob,
+            cName,
+            COUNT(users.uID) AS totalArticles
+    FROM
+        ((users
+    INNER JOIN article ON users.uID = article.uID)
+    INNER JOIN country ON country.cID = users.cID)
+    GROUP BY users.uID) AS newBag
+GROUP BY newBag.rID
 
 --3.x
 SELECT fName, lName, email, phone, dob, country.cName AS Citizenship
