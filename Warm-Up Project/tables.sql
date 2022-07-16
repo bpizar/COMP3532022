@@ -3,10 +3,19 @@ CREATE TABLE region (
     rName VARCHAR(90) NOT NULL
 );
 
+CREATE TABLE organizations (
+    orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    oName VARCHAR(60),
+    otype ENUM('Government','Research Center','Company')
+   
+);
+
 CREATE TABLE country (
     cID INT UNSIGNED AUTO_INCREMENT,
     rID INT UNSIGNED,
     orgID INT UNSIGNED,
+    FOREIGN KEY (orgID)
+        REFERENCES organizations (orgID),
     FOREIGN KEY (rID) REFERENCES region(rID),
     PRIMARY KEY(cID,rID),
     cName VARCHAR(90) NOT NULL,
@@ -39,16 +48,13 @@ CREATE TABLE vaccineStat (
     numVacInfections INT UNSIGNED DEFAULT 0 NOT NULL
 );
 
-CREATE TABLE organizations (
-    orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    oName VARCHAR(60),
-    otype ENUM('Government','Research Center','Company')
-   
-);
+
 
 CREATE TABLE users (
     uID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     orgID INT UNSIGNED, 
+    FOREIGN KEY (orgID)
+        REFERENCES organizations (orgID),
     cID INT UNSIGNED,
     FOREIGN KEY (cID)
         REFERENCES country (cID),
@@ -56,7 +62,7 @@ CREATE TABLE users (
     lName VARCHAR(60) DEFAULT 'N/A',
     phone INT UNSIGNED,
     email VARCHAR(100) DEFAULT 'empty',
-    privilege ENUM('Administrator', 'Researcher', 'Organization Delegate', 'Regular'),
+    privilege ENUM('Administrator', 'Regular', 'Researcher', 'Organization Delegate'),
     dob DATE
 );
 CREATE TABLE article (
@@ -72,14 +78,13 @@ CREATE TABLE article (
     pubDate DATE NOT NULL
 );
 
-
-
-
-
 show tables
 DROP TABLE country, covid_19stat,region,vaccines,vaccineStat, organizations, users, article
+DROP TABLE region;
+DROP TABLE covid_19stat;
+DROP TABLE vaccines;
+DROP TABLE vaccineStat;
+DROP TABLE organizations;
+DROP TABLE users;
+DROP TABLE article;
 
-SELECT *
-From users
-
-desc country

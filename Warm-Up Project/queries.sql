@@ -1,4 +1,5 @@
 -- 3.i
+
 SELECT 
     rName,
     SUM(DISTINCT Population),
@@ -14,6 +15,7 @@ FROM
 GROUP BY region.rID;
 
 -- 3.ii
+
 SELECT 
     rName,cName,
     Population,
@@ -43,7 +45,37 @@ FROM
     GROUP BY vaccines.name
     ORDER BY Deaths ASC;
 
+
+-- 3.iv
+
+SELECT 
+    newBag.rName,
+    SUM(DISTINCT newBag.Population) AS totalPopulation,
+    COUNT(newBag.rID) AS totalResearchers,
+    SUM(newBag.totalArticles),
+    AVG(newBag.totalArticles),
+    ((COUNT(newBag.rID)  *100)/Population) *100 AS percentPopResearcher
+FROM
+    (SELECT 
+        rName,
+            region.rID,
+            Population,
+            COUNT(article.uID) AS totalArticles,
+            email
+    FROM
+        ((region
+    INNER JOIN country ON region.rID = country.rID)
+    INNER JOIN users ON country.cID = users.cID)
+    INNER JOIN article ON users.uID = article.uID
+    WHERE
+        privilege = 'Researcher'
+    GROUP BY article.uID) AS newBag
+GROUP BY newBag.rName;
+
+
+
 -- 3.v
+
 SELECT 
     cName,rDate,Population,numVaccinations,numInfections,numDeaths
 FROM
@@ -57,24 +89,50 @@ WHERE
 
 
 
---3.vi
+-- 3.vi
+
 SELECT pubDate, author, majorTopic, minorTopic, summary
 FROM article 
 WHERE author = 'Joe Smith'
 ORDER BY pubDate ASC;
 
---3.vii
+-- 3.vii
+
 SELECT MAX(pubDate), author, majorTopic, minorTopic, summary
 FROM article
 WHERE author = 'Joe Smith';
 
---3.viii
+-- 3.viii
+
 SELECT privilege, oName, fName, lName, email, phone, dob, country.cName AS Citizenship
 FROM ((users INNER JOIN country ON users.cID = country.cID) 
                 LEFT JOIN organizations ON users.orgID = organizations.orgID)
 ORDER BY privilege ASC, cName ASC, dob ASC;
 
---3.x
+
+-- 3.ix
+
+SELECT 
+    newBag.fName,
+    newBag.lName,
+    newBag.email,
+    newBag.phone,
+    newBag.dob,
+    newBag.cName,
+    newBag.totalArticles,
+    MAX(newBag.totalArticles)
+FROM
+    (SELECT rID, fName, lName, email, phone, dob, 
+cName, COUNT(users.uID) AS totalArticles
+    FROM
+        ((users INNER JOIN article ON users.uID = article.uID)
+          INNER JOIN country ON country.cID = users.cID)
+    GROUP BY users.uID) AS newBag
+GROUP BY newBag.rID;
+
+
+-- 3.x
+
 SELECT fName, lName, email, phone, dob, country.cName AS Citizenship
 FROM ((users 
         INNER JOIN country ON users.cID = country.cID) 
