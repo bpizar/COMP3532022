@@ -145,3 +145,30 @@ ORDER BY Citizenship ASC, users.uID ASC;
 
 
 
+-- SELECT COUNT(*) FROM R
+
+SELECT COUNT(*)
+FROM country;
+
+SELECT COUNT(*)
+FROM covid_19stat;
+
+SELECT COUNT(*)
+FROM region;
+
+SELECT COUNT(*)
+FROM vaccines;
+
+SELECT COUNT(*)
+FROM vaccineStat;
+
+SELECT COUNT(*)
+FROM organizations;
+
+SELECT COUNT(*)
+FROM users;
+
+SELECT COUNT(*)
+FROM article;
+
+
