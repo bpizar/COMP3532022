@@ -106,17 +106,7 @@ FROM article
 WHERE author = 'Joe Smith';
 
 
--- 3.viii
-(SELECT orgdel.privilege, fName, lName, email, phone, dob
-FROM (users LEFT JOIN researchers ON users.uID = researchers.reID)
-            INNER JOIN orgdel ON users.uID = orgdel.orgdelID)
-        UNION
-(SELECT researchers.privilege, fName, lName, email, phone, dob
-FROM (users LEFT JOIN orgdel ON users.uID = orgdel.orgdelID)
-            INNER JOIN researchers ON users.uID = researchers.reID)
-;
-
--- viii (this one works properly with admin and regularUser tables added)
+-- viii 
 (SELECT admin.privilege, fName, lName, email, phone, dob
 FROM (users INNER JOIN admin ON users.uID = admin.adminID))
 
