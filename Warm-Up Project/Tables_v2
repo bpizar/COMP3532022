@@ -95,6 +95,9 @@ CREATE TABLE article (
     reID INT UNSIGNED,
     FOREIGN KEY (reID)
         REFERENCES researchers (reID),
+    orgID INT UNSIGNED, 
+    FOREIGN KEY (orgID) 
+        REFERENCES organizations (orgID),
     Author VARCHAR(90) NOT NULL,
     majorTopic VARCHAR(90) DEFAULT 'N/A',
     minorTopic VARCHAR(90) DEFAULT 'N/A',
