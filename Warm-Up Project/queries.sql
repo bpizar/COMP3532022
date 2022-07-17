@@ -1,3 +1,4 @@
+
 -- 3.i
 
 SELECT 
@@ -32,6 +33,7 @@ GROUP BY country.cID
 ORDER BY rName,cName ASC;
 
 -- 3.iii
+
 SELECT 
     vaccines.name,rName,SUM(numVaccinations) ,SUM(numVacDeath) AS Deaths
 FROM
@@ -45,32 +47,31 @@ FROM
     GROUP BY vaccines.name
     ORDER BY Deaths ASC;
 
-
 -- 3.iv
-
 SELECT 
     newBag.rName,
     SUM(DISTINCT newBag.Population) AS totalPopulation,
     COUNT(newBag.rID) AS totalResearchers,
-    SUM(newBag.totalArticles),
-    AVG(newBag.totalArticles),
-    ((COUNT(newBag.rID)  *100)/Population) *100 AS percentPopResearcher
+    SUM(newBag.totalArticles) AS totalArticles,
+    AVG(newBag.totalArticles) averageArticles,
+    ((COUNT(newBag.rID) * 100) / Population) * 100 AS percentPopResearcher
 FROM
     (SELECT 
-        rName,
+            rName,
             region.rID,
             Population,
-            COUNT(article.uID) AS totalArticles,
+            COUNT(article.reID) AS totalArticles,
             email
     FROM
         ((region
     INNER JOIN country ON region.rID = country.rID)
     INNER JOIN users ON country.cID = users.cID)
-    INNER JOIN article ON users.uID = article.uID
-    WHERE
-        privilege = 'Researcher'
-    GROUP BY article.uID) AS newBag
-GROUP BY newBag.rName;
+    INNER JOIN researchers ON users.uID = researchers.reID
+    LEFT JOIN article ON researchers.reID = article.reID
+    GROUP BY article.reID) AS newBag
+GROUP BY newBag.rName
+ORDER BY percentPopResearcher ASC
+;
 
 
 
@@ -96,21 +97,45 @@ FROM article
 WHERE author = 'Joe Smith'
 ORDER BY pubDate ASC;
 
+
+
 -- 3.vii
 
 SELECT MAX(pubDate), author, majorTopic, minorTopic, summary
 FROM article
 WHERE author = 'Joe Smith';
 
+
 -- 3.viii
+(SELECT orgdel.privilege, fName, lName, email, phone, dob
+FROM (users LEFT JOIN researchers ON users.uID = researchers.reID)
+            INNER JOIN orgdel ON users.uID = orgdel.orgdelID)
+        UNION
+(SELECT researchers.privilege, fName, lName, email, phone, dob
+FROM (users LEFT JOIN orgdel ON users.uID = orgdel.orgdelID)
+            INNER JOIN researchers ON users.uID = researchers.reID)
+;
 
-SELECT privilege, oName, fName, lName, email, phone, dob, country.cName AS Citizenship
-FROM ((users INNER JOIN country ON users.cID = country.cID) 
-                LEFT JOIN organizations ON users.orgID = organizations.orgID)
-ORDER BY privilege ASC, cName ASC, dob ASC;
+-- viii (this one works properly with admin and regularUser tables added)
+(SELECT admin.privilege, fName, lName, email, phone, dob
+FROM (users INNER JOIN admin ON users.uID = admin.adminID))
 
+UNION
+
+(SELECT regularUser.privilege, fName, lName, email, phone, dob
+FROM (users INNER JOIN regularUser ON users.uID = regularUser.uID))
+
+UNION
+
+(SELECT researchers.privilege, fName, lName, email, phone, dob
+FROM (users INNER JOIN researchers ON users.uID = researchers.reID))
+
+UNION 
+(SELECT orgDel.privilege, fName, lName, email, phone, dob
+FROM (users INNER JOIN orgDel ON users.uID = orgDel.orgdelID));
 
 -- 3.ix
+
 
 SELECT 
     newBag.fName,
@@ -120,28 +145,38 @@ SELECT
     newBag.dob,
     newBag.cName,
     newBag.totalArticles,
-    MAX(newBag.totalArticles)
+    MAX(newBag.totalArticles) AS totNumArticles
 FROM
-    (SELECT rID, fName, lName, email, phone, dob, 
-cName, COUNT(users.uID) AS totalArticles
+    (SELECT 
+        region.rID,
+            fName,
+            lName,
+            email,
+            phone,
+            dob,
+            cName,
+            COUNT(users.uID) AS totalArticles
     FROM
-        ((users INNER JOIN article ON users.uID = article.uID)
-          INNER JOIN country ON country.cID = users.cID)
+        ((region
+    INNER JOIN country ON region.rID = country.rID)
+    INNER JOIN users ON country.cID = users.cID)
+    INNER JOIN researchers ON users.uID = researchers.reID
+    LEFT JOIN article ON researchers.reID = article.reID
     GROUP BY users.uID) AS newBag
 GROUP BY newBag.rID;
 
 
 -- 3.x
-
 SELECT fName, lName, email, phone, dob, country.cName AS Citizenship
 FROM ((users 
         INNER JOIN country ON users.cID = country.cID) 
-        LEFT JOIN article ON users.uID = article.uID)
-WHERE users.privilege = 'Researcher'  
-GROUP BY users.uID, Citizenship
-HAVING (COUNT(article.uID) = 0)
-ORDER BY Citizenship ASC, users.uID ASC;
-
+        LEFT JOIN researchers ON researchers.reID = users.uID)
+            LEFT JOIN 
+                article ON researchers.reID = article.reID
+WHERE researchers.reID IS NOT NULL 
+        AND
+      aID IS NULL
+;
 
 
 
@@ -170,5 +205,4 @@ FROM users;
 
 SELECT COUNT(*)
 FROM article;
-
 
