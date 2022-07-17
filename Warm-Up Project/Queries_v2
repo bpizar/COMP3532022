@@ -47,7 +47,6 @@ FROM
     ORDER BY Deaths ASC;
 
 -- 3.iv
-
 SELECT 
     newBag.rName,
     SUM(DISTINCT newBag.Population) AS totalPopulation,
@@ -57,10 +56,10 @@ SELECT
     ((COUNT(newBag.rID) * 100) / Population) * 100 AS percentPopResearcher
 FROM
     (SELECT 
-        rName,
+			rName,
             region.rID,
             Population,
-            COUNT(users.uID) AS totalArticles,
+            COUNT(article.reID) AS totalArticles,
             email
     FROM
         ((region
@@ -68,7 +67,7 @@ FROM
     INNER JOIN users ON country.cID = users.cID)
     INNER JOIN researchers ON users.uID = researchers.reID
     LEFT JOIN article ON researchers.reID = article.reID
-    GROUP BY users.uID) AS newBag
+    GROUP BY article.reID) AS newBag
 GROUP BY newBag.rName
 ORDER BY percentPopResearcher ASC
 ;
