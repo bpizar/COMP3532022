@@ -68,6 +68,18 @@ CREATE TABLE orgDel (
 
 );
 
+CREATE TABLE regularUser (
+    uID INT UNSIGNED PRIMARY KEY,
+    FOREIGN KEY (uID) REFERENCES users (uID),
+    privilege VARCHAR(30) DEFAULT 'Regular'
+);
+
+CREATE TABLE admin (
+    adminID INT UNSIGNED PRIMARY KEY,
+    FOREIGN KEY (adminID) REFERENCES users (uID),
+    privilege VARCHAR(30) DEFAULT 'Administrator'
+);
+
 CREATE TABLE organizations (
     orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	orgdelID INT UNSIGNED,
