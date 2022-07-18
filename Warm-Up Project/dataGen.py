@@ -45,19 +45,51 @@ f = open("data.sql", "w")
 # Region Table
 f.write("INSERT INTO region VALUES\n (1,\'Africa\'),\n (2,\'Americas\'),\n(3,\'Eastern Mediterranean\'),\n(4,\'Europe\'),\n(5,\'South-East Asia\'),\n(6,\'Western Pacific\');\n")
 
+
+
+#Create Organizations (government agencies (their index will match each countries oID))
+#Gov agency
+f.write("\n\nINSERT INTO organizations VALUES\n")
+first = True
+for i in range(len(countries)):
+    oID = i+1
+    name = f"{countries[i]} Government Agency"
+    oType = "Government"
+    if first:
+        f.write(f"({oID},\'{name}\',\'{oType}\')")
+        first = False
+    else:
+        f.write(f",\n({oID},\'{name}\',\'{oType}\')")
+f.write(",\n")
+#Research Centers
+first = True
+for count, institute in enumerate(researchInst):
+    oID = len(countries)+1 + count
+    name = institute
+    oType = "Research Center"
+    if first:
+        f.write(f"({oID},\'{name}\',\'{oType}\')")
+        first = False
+    else:
+        f.write(f",\n({oID},\'{name}\',\'{oType}\')")
+f.write(";\n\n")
+
+
 #Generating Country Data
 f.write("\n\nINSERT INTO country VALUES\n")
 first = True
 for region in regions:
     for country in regionDict[region]:
         if first:
-            f.write(f"({regionID[region]},NULL,\'{country}\',{countryPop[country]})")
+            f.write(f"(NULL,{regionID[region]},{countries.index(country)+1},\'{country}\',{countryPop[country]})")
             first = False
         else:
-            f.write(f",\n({regionID[region]},NULL,\'{country}\',{countryPop[country]})")
+            f.write(f",\n(NULL,{regionID[region]},{countries.index(country)+1},\'{country}\',{countryPop[country]})")
 f.write(";\n\n")
 
 
+#Inserting Vaccine info
+f.write("INSERT INTO vaccines VALUES\n(1,\'Pfizer\'),\n(2,\'Moderna\'),\n(3,\'AstraZeneca\'),\n(4,\'Johnson & Johnson\');\n")
 
 
 #generating covid 19 statistics
@@ -82,10 +114,6 @@ for statID in range(10*len(countries)):
         f.write(f",\n(NULL,{i+1},\'{date}\',{countryNumInfections[i]},{countryNumDeaths[i]})")
 f.write(";\n\n")
 
-#Inserting Vaccine info
-f.write("INSERT INTO vaccines VALUES\n(NULL,\'Pfizer\'),\n(NULL,\'Moderna\'),\n(NULL,\'AstraZeneca\'),\n(NULL,\'Johnson & Johnson\');\n")
-
-
 
 f.write("\n\nINSERT INTO vaccinestat VALUES\n")
 first = True
@@ -97,10 +125,10 @@ for x in range(10*len(countries)):
     numVacInfections = int(random.uniform(0.01,0.4)*numVaccinations)
     numVacDeaths = int(random.uniform(0.001,0.007)*numVacInfections)
     if first:
-        f.write(f"({vID},{statID},{numVaccinations},{numVacDeaths},{numVacInfections})")
+        f.write(f"({vID},{statID},{numVaccinations},{numVacInfections},{numVacDeaths})")
         first = False
     else:
-        f.write(f",\n({vID},{statID},{numVaccinations},{numVacDeaths},{numVacInfections})")
+        f.write(f",\n({vID},{statID},{numVaccinations},{numVacInfections},{numVacDeaths})")
 f.write(";\n\n")
 
 
@@ -110,131 +138,52 @@ numUsers = 100
 for x in range(numUsers):
     firstName = fName[random.randint(0,len(fName)-1)]
     lastName = lName[random.randint(0,len(lName)-1)]
+    oID = "NULL"
     cID = random.randint(1,len(countries)-1)
     email = f"{firstName}{lastName}@gmail.com"
     phone = random.randint(10000,99999)
+    priv = privilege[random.randint(0,3)]
     date = genDate(1970,2010)
+    if priv != 'Regular':
+        if priv == "Organization Delegate":
+            oID = cID
+        elif priv == "Researcher":
+            oID =  len(countries)+1 + random.randint(0,len(researchInst)-1)
     if first:
-        userDetails[1] = [f"Joe Smith", countries.index("Canada"), 'joesmith@gmail.com',phone,date] 
-        f.write(f"(NULL,{cID},\'Joe\',\'Smith\',{phone},\'joesmith@gmail.com\',\'{date}\')")
+        userDetails[1] = [f"Joe Smith",len(countries)+1+1, countries.index("Canada"), 'joesmith@gmail.com',phone,'Researcher'] 
+        f.write(f"(NULL,{len(countries)+1+1},{cID},\'Joe\',\'Smith\',{phone},\'joesmith@gmail.com\',\'Researcher\',\'{date}\')")
         first = False
     else:
-        userDetails[x+1] = [f"{firstName} {lastName}", cID, email,phone,date] 
-        f.write(f",\n(NULL,{cID},\'{firstName}\',\'{lastName}\',{phone},\'{email}\',\'{date}\')")
+        userDetails[x+1] = [f"{firstName} {lastName}",oID, cID, email,phone,priv] 
+        f.write(f",\n(NULL,{oID},{cID},\'{firstName}\',\'{lastName}\',{phone},\'{email}\',\'{priv}\',\'{date}\')")
+            
             
 f.write(";\n\n")
 
-f.write("\n\nINSERT INTO researchers VALUES\n")
-first = True
-numResearchers = int(0.2*numUsers)
-rIDS = [-1]
-rID = -1
-for x in range(numResearchers):
-    while rID in rIDS:
-        rID = random.randint(1, numUsers)
-    rIDS.append(rID)
-    if first:
-        f.write(f"({rID}, DEFAULT)")
-        first = False
-    else:
-        f.write(f",\n({rID}, DEFAULT)")  
-f.write(";\n\n")
-
-f.write("\n\nINSERT INTO orgdel VALUES\n")
-first = True
-numOrgDel = int(0.2*numUsers)
-orgIDS = [-1]
-orgID = -1
-for x in range(numOrgDel):
-    while orgID in orgIDS or orgID in rIDS:
-        orgID = random.randint(1, numUsers)
-    orgIDS.append(orgID)
-    if first:
-        f.write(f"({orgID}, DEFAULT)")
-        first = False
-    else:
-        f.write(f",\n({orgID}, DEFAULT)")  
-f.write(";\n\n")
-
-f.write("\n\nINSERT INTO admin VALUES\n")
-first = True
-numAdmins = 5
-adminIDS = [-1]
-adminID = -1
-for x in range(numAdmins):
-    while adminID in adminIDS or adminID in rIDS or adminID in orgIDS:
-        adminID = random.randint(1, numUsers)
-    adminIDS.append(adminID)
-    if first:
-        f.write(f"({adminID}, DEFAULT)")
-        first = False
-    else:
-        f.write(f",\n({adminID}, DEFAULT)")  
-        
-f.write(";\n\n")
-
-
-f.write("\n\nINSERT INTO regularUser VALUES\n")
-first = True
-for i in range(1,numUsers):
-    if not (i in adminIDS or i in rIDS or i in orgIDS):
-        if first:
-            f.write(f"({i}, DEFAULT)")
-            first = False
-        else:
-            f.write(f",\n({i}, DEFAULT)")  
-f.write(";\n\n")
-
-f.write("\n\nINSERT INTO organizations VALUES\n")
-first = True
-for oID,iD in enumerate(orgIDS):
-    if iD != -1:
-        if random.uniform(0,1) > 0.5:
-            name = f"National Government Agency"
-            oType = "Government"
-        else:
-            name = f"Company Incorporated"
-            oType = "Company"
-        if first:
-            f.write(f"({oID},{iD},\'{name}\',\'{oType}\')")
-            first = False
-        else:
-            f.write(f",\n({oID},{iD},\'{name}\',\'{oType}\')")
-
-f.write(";\n\n")
 
 
 f.write("\n\nINSERT INTO article VALUES\n")
 first = True
 numArticles = 100
-orgIDS.remove(-1)
 for x in range(numArticles):
-    orgDel = False
-    rDel = False
-    uID = orgIDS[random.randint(0,len(orgIDS)-1)]
-    if uID in orgIDS:    
+    uID = random.randint(1,numUsers-1)
+    if userDetails[uID][5] == 'Organization Delegate':    
         author =  f"{countries[userDetails[uID][1]]} Government Agency"
-        orgDel = True
     else:
         author = userDetails[uID][0]
-        rDel = True
     majorTopic = 'MajorTop'
     minorTopic = "MinorTop"
     summary = "This is a summary"
     content = 'This is the content of the article'
     date = genDate(2020,2022)
     if first:
-        if orgDel:  
-            f.write(f"(NULL,NULL,{uID},\'Joe Smith\',\'{majorTopic}\',\'{minorTopic}\',\'{summary}\',\'{content}\',\'{date}\')")
-        else:
-            f.write(f"(NULL,{uID},NULL,\'Joe Smith\',\'{majorTopic}\',\'{minorTopic}\',\'{summary}\',\'{content}\',\'{date}\')")
-
+        f.write(f"(NULL,{1},\'Joe Smith\',\'{majorTopic}\',\'{minorTopic}\',\'{summary}\',\'{content}\',\'{date}\')")
         first = False
     else:
-        if orgDel:
-            f.write(f",\n(NULL,NULL,{uID},\'{author}\',\'{majorTopic}\',\'{minorTopic}\',\'{summary}\',\'{content}\',\'{date}\')")
-        else:
-            f.write(f",\n(NULL,{uID},NULL,\'{author}\',\'{majorTopic}\',\'{minorTopic}\',\'{summary}\',\'{content}\',\'{date}\')")            
+        f.write(f",\n(NULL,{uID},\'{author}\',\'{majorTopic}\',\'{minorTopic}\',\'{summary}\',\'{content}\',\'{date}\')")
+            
 f.write(";\n\n")
+     
+            
 
 f.close()
