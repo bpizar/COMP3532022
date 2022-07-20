@@ -84,7 +84,7 @@ CREATE TABLE organizations (
     orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     orgdelID INT UNSIGNED,
     FOREIGN KEY (orgdelID)
-        REFERENCES orgdel (orgdelID),
+        REFERENCES orgDel (orgdelID),
     oName VARCHAR(60),
     otype ENUM('Government','Research Center','Company')
    
@@ -95,7 +95,7 @@ CREATE TABLE article (
     reID INT UNSIGNED, 
     FOREIGN KEY (reID) REFERENCES researchers (reID),
     orgdelID INT UNSIGNED, 
-    FOREIGN KEY (orgdelID) REFERENCES orgdel (orgdelID),
+    FOREIGN KEY (orgdelID) REFERENCES orgDel (orgdelID),
     Author VARCHAR(90) NOT NULL,
     majorTopic VARCHAR(90) DEFAULT 'N/A',
     minorTopic VARCHAR(90) DEFAULT 'N/A',
