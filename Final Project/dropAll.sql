@@ -1,3 +1,5 @@
+USE ProjectC19Main;
+
 DROP TABLE 
 emails,
 subscribed, 
