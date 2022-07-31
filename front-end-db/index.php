@@ -33,6 +33,14 @@
         <li>
             <a href="createArticle.html"> <strong>Create an Article </strong></a>
         </li>
+
+        <li>
+            <a href="createCountry.html"> <strong>Create a Country </strong></a>
+        </li>
+
+        <li>
+            <a href="createPST.html"> <strong>Create a ProStaTer </strong></a>
+        </li>
     </ul>
 
     <br>
@@ -65,6 +73,32 @@
 
         <li>
             <a href="displayArticle.php"> <strong>View All Articles </strong></a>
+        </li>
+
+        <li>
+            <a href="displayCountry.php"> <strong>View All Countries </strong></a>
+        </li>
+
+        <li>
+            <a href="displayPST.php"> <strong>View All ProStaTers </strong></a>
+        </li>
+    </ul>
+
+    <br>
+    <br>
+
+    <h2><strong>DO NOT CLICK ANY OF THESE UNLESS YOU KNOW WHAT YOU ARE DOING</strong></h2>
+    <ul>
+        <li>
+            <a href="install.php"><strong>CREATE ALL TABLES</strong></a>
+        </li>
+
+        <li>
+            <a href="drop.php"><strong>DROP ALL TABLES</strong></a>
+        </li>
+
+        <li>
+            <a href="populateRegions.php"><strong>INSERT All Regions</strong></a>
         </li>
     </ul>
 

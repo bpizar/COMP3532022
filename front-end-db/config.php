@@ -8,7 +8,7 @@
 $host       = "127.0.0.1";
 $username   = "root";
 $password   = "pw"; //put your password
-$dbname     = "pname"; // put the name of project
+$dbname     = "Pname"; // put the name of project
 $port = "3306";
 $dsn        = "mysql:host=$host;port=$port;dbname=$dbname";
 $options    = array(
