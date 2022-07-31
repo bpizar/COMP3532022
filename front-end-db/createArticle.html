@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Simple Database App</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <h1>Simple Database App</h1>
+
+    <h2>Add an Article</h2>
+
+    <form action="createArticle.php" method="post">
+        <label for="authorID">Author ID (must be a registered Author)</label>
+        <input type="text" name="authorID" id="authorID">
+        <br>
+        <label for="Author">Author</label>
+        <input type="text" name="Author" id="Author">
+        <br>
+        <label for="majorTopic">Major Topic</label>
+        <input type="text" name="majorTopic" id="majorTopic">
+        <br>
+        <label for="minorTopic">Minor Topic</label>
+        <input type="text" name="minorTopic" id="minorTopic">
+        <br>
+        <label for="summary">Summary</label>
+        <input type="text" name="summary" id="summary">
+        <br>
+        <label for="content">Content</label>
+
+        <textarea name="content" id="" cols="30" rows="10"></textarea>
+        <br>
+        <label for="pubDate">Publication Date</label>
+        <input type="date" name="pubDate" id="pubDate">
+        <br>
+        <label for="active">Active or not (1 for active, 0 for inactive)</label>
+        <input type="text" name="active" id="active">
+        <br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+
+    <a href="index.php">Back to home</a>
+</body>
+
+</html>

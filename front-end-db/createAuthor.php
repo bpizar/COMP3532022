@@ -10,20 +10,21 @@ try {
 }
 
 try {
-    $sql = "INSERT INTO organizations (orgdelID, oName, otype) VALUES (:orgdelID, :oName, :otype)";
+    $sql = "INSERT INTO authors (authorID) VALUES (:authorID)";
     $statement = $connection->prepare($sql);
 
-    $statement->bindParam(':orgdelID', $_REQUEST['orgdelID']);
-    $statement->bindParam(':oName', $_REQUEST['oName']);
-    $statement->bindParam(':otype', $_REQUEST['otype']);
+    $statement->bindParam(':authorID', $_REQUEST['authorID']);
+
 
     $statement->execute();
     echo "Records Inserted Successfully";
 ?>
+
     <br>
-    <a href="displayOrg.php">View All Organizations</a>
+    <a href="displayAuthor.php">View All Authors</a>
     <br>
     <a href="index.php">Back to home</a>
+
 <?php
 } catch (PDOException $e) {
     die("ERROR: Could not able to execute $sql. " . $e->getMessage());

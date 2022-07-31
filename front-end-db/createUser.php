@@ -2,14 +2,14 @@
 
 require "config.php";
 
-try{
+try {
     $connection = new PDO($dsn, $username, $password, $options);
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}catch(PDOException $e){
+} catch (PDOException $e) {
     die("ERROR: Could not connect. " . $e->getMessage());
 }
 
-try{
+try {
     $sql = "INSERT INTO users (fName, lName, email, phone, dob, username, pw) VALUES (:fName, :lName, :email, :phone, :dob, :username, :pw)";
     $statement = $connection->prepare($sql);
 
@@ -23,19 +23,24 @@ try{
 
     $statement->execute();
     echo "Records Inserted Successfully";
-}catch(PDOException $e){
+?>
+
+    <br>
+    <a href="displayUsers.php">View All Users</a>
+    <br>
+    <a href="index.php">Back to home</a>
+
+<?php
+} catch (PDOException $e) {
     die("ERROR: Could not able to execute $sql. " . $e->getMessage());
 }
- 
+
 // Close connection
 unset($connection);
-    
+
 
 ?>
 
 
 
 <?php require "templates/footer.php"; ?>
-
-
-

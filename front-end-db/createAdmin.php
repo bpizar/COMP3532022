@@ -18,6 +18,13 @@ try {
 
     $statement->execute();
     echo "Records Inserted Successfully";
+?>
+    <br>
+    <a href="displayAdmin.php">View All Admins</a>
+    <br>
+    <a href="index.php">Back to home</a>
+
+<?php
 } catch (PDOException $e) {
     die("ERROR: Could not able to execute $sql. " . $e->getMessage());
 }
