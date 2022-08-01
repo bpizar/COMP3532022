@@ -7,39 +7,39 @@
     <?php include "templates/header.php"; ?>
     <ul>
         <li>
-            <a href="createUser.html"><strong>Create a Regular User</strong></a>
+            <a href="html/createUser.html"><strong>Create a Regular User</strong></a>
         </li>
 
         <li>
-            <a href="createAdmin.html"> <strong>Create an Admin User </strong></a>
+            <a href="html/createAdmin.html"> <strong>Create an Admin User </strong></a>
         </li>
 
         <li>
-            <a href="createResearcher.html"> <strong>Create a Researcher User </strong></a>
+            <a href="html/createResearcher.html"> <strong>Create a Researcher User </strong></a>
         </li>
 
         <li>
-            <a href="createOrgDel.html"> <strong>Create an Organization Delegate User </strong></a>
+            <a href="html/createOrgDel.html"> <strong>Create an Organization Delegate User </strong></a>
         </li>
 
         <li>
-            <a href="createOrg.html"> <strong>Create an Organization </strong></a>
+            <a href="html/createOrg.html"> <strong>Create an Organization </strong></a>
         </li>
 
         <li>
-            <a href="createAuthor.html"> <strong>Create an Author User </strong></a>
+            <a href="html/createAuthor.html"> <strong>Create an Author User </strong></a>
         </li>
 
         <li>
-            <a href="createArticle.html"> <strong>Create an Article </strong></a>
+            <a href="html/createArticle.html"> <strong>Create an Article </strong></a>
         </li>
 
         <li>
-            <a href="createCountry.html"> <strong>Create a Country </strong></a>
+            <a href="html/createCountry.html"> <strong>Create a Country </strong></a>
         </li>
 
         <li>
-            <a href="createPST.html"> <strong>Create a ProStaTer </strong></a>
+            <a href="html/createPST.html"> <strong>Create a ProStaTer </strong></a>
         </li>
     </ul>
 
@@ -83,6 +83,48 @@
             <a href="displayPST.php"> <strong>View All ProStaTers </strong></a>
         </li>
     </ul>
+
+    <br>
+    <br>
+
+    <ul>
+        <li>
+            <a href="html/deleteAdmin.html"> <strong>Delete an Admin </strong></a>
+        </li>
+
+        <li>
+            <a href="html/deleteRes.html"> <strong>Delete a Researchers </strong></a>
+        </li>
+
+        <li>
+            <a href="html/deleteOrgDel.html"> <strong>Delete an Organization Delegate </strong></a>
+        </li>
+
+        <li>
+            <a href="html/deleteAuthor.html"> <strong>Delete and Author </strong></a>
+        </li>
+
+        <li>
+            <a href="html/deleteOrg.html"> <strong>Delete an Organization </strong></a>
+        </li>
+
+        <li>
+            <a href="html/deleteCountry.html"> <strong>Delete a Country (including all PSTs) </strong></a>
+        </li>
+
+        <li>
+            <a href="html/deletePST.html"> <strong>Delete a ProStaTer </strong></a>
+        </li>
+
+        <li>
+            <a href="html/deleteArticle.html"> <strong>Delete a Article </strong></a>
+        </li>
+
+        <li>
+            <a href="html/suspendUser.html"> <strong>Suspend a User </strong></a>
+        </li>
+    </ul>
+
 
     <br>
     <br>
