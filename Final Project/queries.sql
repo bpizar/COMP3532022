@@ -110,3 +110,14 @@ FROM (((authors
         LEFT JOIN organizations ON authors.orgdelID = organizations.orgdelID 
 GROUP BY subscribed.authorID
 ORDER BY NumSubscribers DESC;
+
+-- alternate version: if oName is Null (ie author is a researcher) shows first + last name of researcher as Author Name,
+-- or if there is an oName (author is organization) shows organization Name as AuthorName
+SELECT authors.authorID, IFNULL(oName, CONCAT(fName, ' ', lName)) AS AuthorName, cName AS Citizenship, COUNT(subscribed.uID) AS NumSubscribers
+FROM (((authors 
+		INNER JOIN subscribed ON subscribed.authorID = authors.authorID)
+        INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = users.uID))
+        INNER JOIN country ON users.cID = country.cID)
+        LEFT JOIN organizations ON authors.orgdelID = organizations.orgdelID 
+GROUP BY subscribed.authorID
+ORDER BY NumSubscribers DESC;
