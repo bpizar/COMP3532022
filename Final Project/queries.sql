@@ -89,7 +89,10 @@ ORDER BY rName ASC, NumPublications DESC;
 
 
 -- 18.
-
+SELECT DATE(dateTime), users.email AS Receiver, subject
+FROM emails INNER JOIN users ON emails.uID = users.uID
+WHERE dateTime BETWEEN date1 AND date2  -- user inputs start date and end date
+ORDER BY dateTime ASC;
 
 
 -- 19.
