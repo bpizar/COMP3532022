@@ -34,7 +34,7 @@ FROM ((article
 		INNER JOIN authors ON article.authorID = authors.authorID) 
 		INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = user.uID))
         INNER JOIN country ON users.cID = country.cID
-WHERE active = 0
+WHERE article.aID IN (Select aID from isremoved)
 ORDER BY Citizenship ASC, Author ASC, pubDate ASC;
 
 -- alternate version to account for new isRemoved relation for articles
