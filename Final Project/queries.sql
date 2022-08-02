@@ -37,6 +37,15 @@ FROM ((article
 WHERE active = 0
 ORDER BY Citizenship ASC, Author ASC, pubDate ASC;
 
+-- alternate version to account for new isRemoved relation for articles
+SELECT Author, majorTopic, minorTopic, summary, pubDate, removalDate, cName AS Citizenship
+FROM (((article 
+		INNER JOIN authors ON article.authorID = authors.authorID) 
+		INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = user.uID))
+        INNER JOIN country ON users.cID = country.cID)
+        INNER JOIN isRemoved ON article.aID = isRemoved.aid
+ORDER BY Citizenship ASC, removalDate ASC;
+
 
 -- 13.
 (SELECT admin.privilege, username, fName, lName, cName AS Citizenship, email, phone, dob, suspendDate
