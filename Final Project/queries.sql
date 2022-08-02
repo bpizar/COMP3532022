@@ -29,7 +29,13 @@ ORDER BY Citizenship ASC, Author ASC, pubDate ASC;
 
 
 -- 12.
-
+SELECT Author, majorTopic, minorTopic, summary, pubDate, cName AS Citizenship
+FROM ((article 
+		INNER JOIN authors ON article.authorID = authors.authorID) 
+		INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = user.uID))
+        INNER JOIN country ON users.cID = country.cID
+WHERE active = 0
+ORDER BY Citizenship ASC, Author ASC, pubDate ASC;
 
 
 -- 13.
