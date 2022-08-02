@@ -33,7 +33,6 @@ ORDER BY Citizenship ASC, Author ASC, pubDate ASC;
 
 
 -- 13.
-
 (SELECT admin.privilege, username, fName, lName, cName AS Citizenship, email, phone, dob, suspendDate
 FROM ((users INNER JOIN admin ON users.uID = admin.adminID)
 			INNER JOIN country on users.cID = country.cID)
@@ -73,6 +72,7 @@ FROM ((article
 GROUP BY article.authorID
 ORDER BY NumPublications DESC;
 
+
 -- 16.
 SELECT rName, cName, COUNT(DISTINCT users.uID) AS NumAuthors, COUNT(aID) AS NumPublications
 FROM (((authors
@@ -91,9 +91,19 @@ ORDER BY rName ASC, NumPublications DESC;
 -- 18.
 
 
+
 -- 19.
 
 
+
 -- 20.
-
-
+-- not ideal because we've used orgdelID for the author when technically it should be the organization that is the author
+-- so it still shows the org del name when it should only show the organization name
+SELECT authors.authorID, CONCAT(fName, ' ', lName) AS AuthorName, oName AS Organization, cName AS Citizenship, COUNT(subscribed.uID) AS NumSubscribers
+FROM (((authors 
+		INNER JOIN subscribed ON subscribed.authorID = authors.authorID)
+        INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = users.uID))
+        INNER JOIN country ON users.cID = country.cID)
+        LEFT JOIN organizations ON authors.orgdelID = organizations.orgdelID 
+GROUP BY subscribed.authorID
+ORDER BY NumSubscribers DESC;
