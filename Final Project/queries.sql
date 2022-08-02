@@ -23,7 +23,7 @@ ORDER BY privilege ASC, Citizenship ASC;
 SELECT Author, majorTopic, minorTopic, summary, pubDate, cName AS Citizenship
 FROM ((article 
 		INNER JOIN authors ON article.authorID = authors.authorID) 
-		INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = user.uID))
+		INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = users.uID))
         INNER JOIN country ON users.cID = country.cID
 ORDER BY Citizenship ASC, Author ASC, pubDate ASC;
 
