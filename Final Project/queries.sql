@@ -92,7 +92,27 @@ ORDER BY rName ASC, NumPublications DESC;
 
 -- 17.
 
-
+SELECT 
+    rName,
+    cName,
+    SUM(DISTINCT A.population),
+    SUM(totVaccines),
+    SUM(totVacDead)
+FROM
+    (SELECT 
+        rName,
+            cName,
+            Population,
+            SUM(numVaccinations) AS totVaccines,
+            SUM(numVacDeath) AS totVacDead
+    FROM
+        region
+    INNER JOIN country ON country.rID = region.rID
+    INNER JOIN prostater ON prostater.cID = country.cID
+    INNER JOIN covid_19stat ON covid_19stat.pstID = prostater.pstID
+    INNER JOIN vaccinestat ON vaccinestat.statID = covid_19stat.statID
+    GROUP BY covid_19stat.statID) AS A
+GROUP BY cName;
 
 -- 18.
 SELECT DATE(dateTime), users.email AS Receiver, subject
