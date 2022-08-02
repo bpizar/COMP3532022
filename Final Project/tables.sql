@@ -1,3 +1,6 @@
+CREATE DATABASE comp353FinalProject
+USE comp353FinalProject;
+
 CREATE TABLE region (
     rID INT UNSIGNED NOT NULL PRIMARY KEY,
     rName VARCHAR(90) NOT NULL
@@ -9,15 +12,15 @@ CREATE TABLE country (
         REFERENCES region (rID),
     cID INT UNSIGNED AUTO_INCREMENT,
     PRIMARY KEY (cID , rID),
-    cName VARCHAR(90) NOT NULL,
-    Population INT UNSIGNED NOT NULL
+    cName VARCHAR(90) NOT NULL
+    
 );
 
-CREATE TABLE ProStaTer (
+CREATE TABLE proStaTer (
     cID INT UNSIGNED, 
     FOREIGN KEY (cID)
         REFERENCES country (cID),
-    pstID INT UNSIGNED AUTO_INCREMENT,
+    pstID INT UNSIGNED AUTO_INCREMENT UNIQUE,
     PRIMARY KEY (cID, pstID),
     pstName VARCHAR(90) NOT NULL,
     Population INT UNSIGNED NOT NULL
@@ -27,9 +30,9 @@ CREATE TABLE covid_19stat (
     statID INT UNSIGNED AUTO_INCREMENT,
     pstID INT UNSIGNED,
     FOREIGN KEY (pstID)
-            REFERENCES  ProStaTer(pstID),
+            REFERENCES  proStaTer(pstID),
     rDate DATE NOT NULL,
-    PRIMARY KEY(statID, cID),
+    PRIMARY KEY(statID, pstID),
     numInfections INT UNSIGNED DEFAULT 0 NOT NULL,
     numDeaths INT UNSIGNED DEFAULT 0 NOT NULL
 );
@@ -53,15 +56,10 @@ CREATE TABLE vaccineStat (
 
 );
 
-CREATE TABLE isSuspended(
-    uID INT UNSIGNED NOT NULL, 
-    FOREIGN KEY (uID) 
-        REFERENCES users (uID),
-    suspendDate DATE NOT NULL
-);
 
 CREATE TABLE users(
-    uID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    uID INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    PRIMARY KEY (uID),
     cID INT UNSIGNED,
     FOREIGN KEY (cID)
         REFERENCES country (cID),
@@ -71,7 +69,14 @@ CREATE TABLE users(
     email VARCHAR(100) DEFAULT 'empty',
     dob DATE, 
     username VARCHAR(60) NOT NULL,
-    password VARCHAR(60) NOT NULL
+    pw VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE isSuspended(
+    uID INT UNSIGNED NOT NULL, 
+    FOREIGN KEY (uID) 
+        REFERENCES users (uID),
+    suspendDate DATE NOT NULL
 );
 
 CREATE TABLE researchers (
@@ -102,51 +107,108 @@ CREATE TABLE admin (
     privilege VARCHAR(30) DEFAULT 'Administrator'
 );
 
-CREATE TABLE organizations (
+CREATE TABLE organizations  (
     orgID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     orgdelID INT UNSIGNED,
     FOREIGN KEY (orgdelID)
         REFERENCES orgDel (orgdelID),
+    reID INT UNSIGNED,
+    FOREIGN KEY (reID)
+        REFERENCES researchers (reID),
     oName VARCHAR(60),
-    otype ENUM('Government','Research Center','Company')
+    otype ENUM('Government','Research Center','Company'),
+    constraint oneID_check2
+        check ((reID is null or orgdelID is null) and not (reID is null and orgdelID is null))
+);
+
+CREATE TABLE authors (
+    authorID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    reID INT UNSIGNED,
+    FOREIGN KEY (reID)
+        REFERENCES researchers (reID),
+    orgdelID INT UNSIGNED,
+    FOREIGN KEY (orgdelID)
+        REFERENCES orgDel (orgdelID),
+    constraint oneID_check
+        check ((reID is null or orgdelID is null) and not (reID is null and orgdelID is null) )
 );
 
 CREATE TABLE article (
     aID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    reID INT UNSIGNED, 
-    FOREIGN KEY (reID) REFERENCES researchers (reID),
-    orgdelID INT UNSIGNED, 
-    FOREIGN KEY (orgdelID) REFERENCES orgDel (orgdelID),
+    authorID int Unsigned,
+    FOREIGN KEY (authorID)
+        REFERENCES authors (authorID),
     Author VARCHAR(90) NOT NULL,
     majorTopic VARCHAR(90) DEFAULT 'N/A',
     minorTopic VARCHAR(90) DEFAULT 'N/A',
     summary CHAR(100) DEFAULT 'empty',
     content BLOB,
-    pubDate DATE NOT NULL,
-    active BOOL
+    pubDate DATE NOT NULL
 );
-show tables;
+
+CREATE TABLE isRemoved (
+    aID INT UNSIGNED PRIMARY KEY,
+    FOREIGN KEY(aID)
+        REFERENCES article(aID),
+    dor DATE NOT NULL
+
+);
 
 CREATE TABLE subscribed (
     uID INT UNSIGNED NOT NULL,
     FOREIGN KEY (uID) 
         REFERENCES users (uID),
-    authorID INT UNSIGNED NOT NULL
+    authorID INT UNSIGNED NOT NULL,
     FOREIGN KEY (authorID) 
-        REFERENCES researchers (reID),
+        REFERENCES authors(authorID),
     PRIMARY KEY (uID, authorID)
-)
+);
 
 CREATE TABLE emails (
     uID INT UNSIGNED NOT NULL,
     FOREIGN KEY (uID)
-        REFERENCES users (uID),
-    emailID INT UNSIGNED AUTO_INCREMENT,
-    PRIMARY KEY (uID, emailID),
-    dateTime DATETIME NOT NULL,
+        REFERENCES subscribed (uID),
+    authorID INT UNSIGNED,
+    FOREIGN KEY (authorID) 
+        REFERENCES authors(authorID),
+    emailID INT UNSIGNED AUTO_INCREMENT UNIQUE,
+    aID INT UNSIGNED,
+    FOREIGN KEY (aID)
+        REFERENCES article (aID),
+    PRIMARY KEY (uID, emailID,authorID),
+    date_time DATETIME NOT NULL,
     subject VARCHAR(100)
 );
 
-DROP TABLE admin, researchers, regularUser, orgdel,users,organizations, article, vaccines, vaccinestat, covid_19stat, country, region
-DROP TABLE region
-DROP TABLE country
+
+
+
+
+
+
+
+
+
+desc article                                   
+
+show tables
+
+DROP TABLE
+isRemoved, 
+emails,
+subscribed, 
+article, 
+authors, 
+organizations, 
+admin, 
+regularUser, 
+orgDel, 
+researchers, 
+isSuspended, 
+users, 
+vaccineStat, 
+vaccines, 
+covid_19stat, 
+prostater, 
+country,
+region;
