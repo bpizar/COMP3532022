@@ -123,7 +123,35 @@ ORDER BY dateTime ASC;
 
 -- 19.
 
-
+SELECT 
+    totalPopulation,
+    rDate,
+    SUM(numVaccinations),
+    SUM(numInfections),
+    SUM(numVaccinations),
+    SUM(numVacDeath),
+    vaccines.name
+FROM
+    country
+        INNER JOIN
+    prostater ON country.cID = prostater.cID
+        INNER JOIN
+    covid_19stat ON covid_19stat.pstID = prostater.pstID
+        INNER JOIN
+    vaccinestat ON vaccinestat.statID = covid_19stat.statID
+        INNER JOIN
+    vaccines ON vaccinestat.vID = vaccines.vID
+        INNER JOIN
+    (SELECT 
+        prostater.cID AS cID, SUM(Population) AS totalPopulation
+    FROM
+        country
+    INNER JOIN prostater ON country.cID = prostater.cID
+    GROUP BY prostater.cID) AS A ON A.cID = prostater.cID
+WHERE
+    cName = 'givencountryName'		-- user inputs country name
+GROUP BY vaccines.name
+ORDER BY rDate
 
 -- 20.
 -- not ideal because we've used orgdelID for the author when technically it should be the organization that is the author
