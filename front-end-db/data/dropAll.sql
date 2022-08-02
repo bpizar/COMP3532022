@@ -1,6 +1,7 @@
 USE ProjectC19Main;
 
-DROP TABLE 
+DROP TABLE
+isRemoved, 
 emails,
 subscribed, 
 article, 

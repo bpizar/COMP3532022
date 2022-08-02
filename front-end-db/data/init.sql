@@ -164,3 +164,10 @@ CREATE TABLE emails (
     dateTime DATETIME NOT NULL,
     subject VARCHAR(100)
 );
+
+CREATE TABLE isRemoved (
+    aID INT UNSIGNED NOT NULL,
+    FOREIGN KEY (aID)
+        REFERENCES article (aID),
+    removalDate DATE NOT NULL
+);
