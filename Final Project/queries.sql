@@ -184,3 +184,44 @@ FROM (((authors
         LEFT JOIN organizations ON authors.orgdelID = organizations.orgdelID 
 GROUP BY subscribed.authorID
 ORDER BY NumSubscribers DESC;
+
+
+-- alternate version based on above
+-- uses a union of select form reasearchers and select from orgdel to not display nulls
+select
+*
+from
+((SELECT 
+    authors.authorID,
+    CONCAT(fName, ' ', lName) AS AuthorName,
+    cName AS Citizenship,
+    COUNT(subscribed.uID) AS NumSubscribers
+FROM
+    (((authors
+    INNER JOIN subscribed ON subscribed.authorID = authors.authorID)
+    INNER JOIN users ON (authors.reID = users.uID
+        OR authors.orgdelID = users.uID))
+    INNER JOIN country ON users.cID = country.cID)
+        LEFT JOIN
+    organizations ON authors.orgdelID = organizations.orgdelID
+WHERE
+    oName IS NULL
+GROUP BY subscribed.authorID)
+union
+(SELECT 
+    authors.authorID,
+    oName AS AuthorName,
+    cName AS Citizenship,
+    COUNT(subscribed.uID) AS NumSubscribers
+FROM
+    (((authors
+    INNER JOIN subscribed ON subscribed.authorID = authors.authorID)
+    INNER JOIN users ON (authors.reID = users.uID
+        OR authors.orgdelID = users.uID))
+    INNER JOIN country ON users.cID = country.cID)
+        LEFT JOIN
+    organizations ON authors.orgdelID = organizations.orgdelID
+WHERE
+    oName IS not NULL
+GROUP BY subscribed.authorID)) as A
+ORDER BY NumSubscribers DESC;
