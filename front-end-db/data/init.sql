@@ -122,7 +122,10 @@ CREATE TABLE authors (
         REFERENCES researchers (reID),
     orgdelID INT UNSIGNED,
     FOREIGN KEY (orgdelID)
-        REFERENCES orgDel (orgdelID)
+        REFERENCES orgDel (orgdelID),
+    constraint only_one_value 
+        check ((reID is null or orgdelID is null) 
+               and not (reID is null and orgdelID is null) )
 );
 
 CREATE TABLE article (
@@ -135,8 +138,7 @@ CREATE TABLE article (
     minorTopic VARCHAR(90) DEFAULT 'N/A',
     summary CHAR(100) DEFAULT 'empty',
     content BLOB,
-    pubDate DATE NOT NULL,
-    active BOOL
+    pubDate DATE NOT NULL
 );
 
 CREATE TABLE subscribed (
