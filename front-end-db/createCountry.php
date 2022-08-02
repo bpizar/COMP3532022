@@ -13,7 +13,7 @@ try {
 
 
     $sql = "
-    INSERT INTO country (rID, cName, Population) VALUES (:rID, :cName, :Population);
+    INSERT INTO country (rID, cName) VALUES (:rID, :cName);
     INSERT INTO organizations (oName, otype) VALUES (:cName, :government);
     ";
 
@@ -23,7 +23,6 @@ try {
 
     $statement->bindParam(':rID', $_REQUEST['rID']);
     $statement->bindParam(':cName', $_REQUEST['cName']);
-    $statement->bindParam(':Population', $_REQUEST['Population']);
     $statement->bindParam(':government', $government);
 
 

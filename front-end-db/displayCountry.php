@@ -20,7 +20,7 @@ try {
         <th>rID</th>
         <th>cID</th>
         <th>cName</th>
-        <th>Population</th>
+
 
     </tr>
 
@@ -31,7 +31,7 @@ try {
             <td><?php echo $datas['rID']; ?></td>
             <td><?php echo $datas['cID']; ?></td>
             <td><?php echo $datas['cName']; ?></td>
-            <td><?php echo $datas['Population']; ?></td>
+
 
         </tr>
     <?php } ?>

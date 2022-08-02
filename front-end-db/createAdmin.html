@@ -5,26 +5,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Organization Delegate</title>
+    <title>Create Admin</title>
 </head>
 
 <body>
     <h1>Simple Database App</h1>
 
-    <h2>Add an Organization Delegate User</h2>
+    <h2>Add an Admin User</h2>
 
-    <form action="createOrgDel.php" method="post">
-        <label for="orgdelID">Enter User ID (This will become Delegate ID, USER MUST EXIST)</label>
-        <input type="text" name="orgdelID" id="orgdelID">
+    <form action="createAdmin.php" method="post">
+        <label for="adminID">Enter User ID (This will become Admin ID, USER MUST EXIST)</label>
+        <input type="text" name="adminID" id="adminID">
         <br>
 
-        <label for="privilege">type "Organization Delegate" to confirm</label>
+        <label for="privilege">type "Administrator" to confirm</label>
         <input type="text" name="privilege" id="privilege">
         <br>
         <input type="submit" name="submit" value="Submit">
     </form>
 
-    <a href="index.php">Back to home</a>
+    <a href="../index.php">Back to home</a>
 </body>
 
 </html>

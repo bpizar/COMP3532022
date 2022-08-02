@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Researcher</title>
+    <title>Delete Researcher</title>
 </head>
 
 <body>
     <h1>Simple Database App</h1>
 
-    <h2>Add a Researcher User</h2>
+    <h2>Delete a Researcher User</h2>
 
-    <form action="createResearcher.php" method="post">
-        <label for="reID">Enter User ID (This will become Researcher ID, USER MUST EXIST)</label>
+    <form action="deleteRes.php" method="post">
+        <label for="reID">Enter User ID (reID)</label>
         <input type="text" name="reID" id="reID">
         <br>
 
@@ -24,7 +24,8 @@
         <input type="submit" name="submit" value="Submit">
     </form>
 
-    <a href="index.php">Back to home</a>
+    <a href="../index.php">Back to home</a>
+
 </body>
 
 </html>

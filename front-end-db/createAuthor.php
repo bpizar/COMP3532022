@@ -10,11 +10,19 @@ try {
 }
 
 try {
-    $sql = "INSERT INTO authors (authorID) VALUES (:authorID)";
-    $statement = $connection->prepare($sql);
 
-    $statement->bindParam(':authorID', $_REQUEST['authorID']);
 
+    if ($_REQUEST['reID'] == null) {
+        $sql = "INSERT INTO authors (orgdelID) VALUES (:orgdelID)";
+        $statement = $connection->prepare($sql);
+
+        $statement->bindParam(':orgdelID', $_REQUEST['orgdelID']);
+    } else {
+        $sql = "INSERT INTO authors (reID) VALUES (:reID)";
+        $statement = $connection->prepare($sql);
+
+        $statement->bindParam(':reID', $_REQUEST['reID']);
+    }
 
     $statement->execute();
     echo "Records Inserted Successfully";

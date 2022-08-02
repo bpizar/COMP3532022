@@ -14,6 +14,12 @@ try {
     $connection->exec($sql);
 
     echo "Table created successfully.";
+?>
+    <br>
+    <a href="index.php">Back to home</a>
+
+<?php
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
+?>

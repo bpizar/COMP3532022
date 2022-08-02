@@ -5,26 +5,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete OrgDel</title>
+    <title>Delete Admin</title>
 </head>
 
 <body>
     <h1>Simple Database App</h1>
 
-    <h2>Delete an Organization Delegate User</h2>
+    <h2>Delete an Admin User</h2>
 
     <form action="deleteAdmin.php" method="post">
-        <label for="orgdelID">Enter User ID (orgdelID)</label>
-        <input type="text" name="orgdelID" id="orgdelID">
+        <label for="adminID">Enter User ID (adminID)</label>
+        <input type="text" name="adminID" id="adminID">
         <br>
 
-        <label for="privilege">type "Organization Delegate" to confirm</label>
+        <label for="privilege">type "Administrator" to confirm</label>
         <input type="text" name="privilege" id="privilege">
         <br>
         <input type="submit" name="submit" value="Submit">
     </form>
+    <a href="../index.php">Back to home</a>
 
-    <a href="index.php">Back to home</a>
 </body>
 
 </html>

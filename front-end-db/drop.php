@@ -14,6 +14,12 @@ try {
     $connection->exec($sql);
 
     echo "Tables dropped successfully";
+?>
+    <br>
+    <a href="index.php">Back to Home</a>
+
+<?php
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
+?>

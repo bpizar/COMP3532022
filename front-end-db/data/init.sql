@@ -12,8 +12,7 @@ CREATE TABLE country (
         REFERENCES region (rID),
     cID INT UNSIGNED AUTO_INCREMENT,
     PRIMARY KEY (cID , rID),
-    cName VARCHAR(90) NOT NULL,
-    Population INT UNSIGNED NOT NULL
+    cName VARCHAR(90) NOT NULL
 );
 
 CREATE TABLE proStaTer (
@@ -65,7 +64,7 @@ CREATE TABLE users(
         REFERENCES country (cID),
     fName VARCHAR(60) DEFAULT 'N/A',
     lName VARCHAR(60) DEFAULT 'N/A',
-    phone INT UNSIGNED,
+    phone BIGINT UNSIGNED,
     email VARCHAR(100) DEFAULT 'empty',
     dob DATE, 
     username VARCHAR(60) NOT NULL,
@@ -117,10 +116,12 @@ CREATE TABLE organizations (
 );
 
 CREATE TABLE authors (
-    authorID INT UNSIGNED PRIMARY KEY,
-    FOREIGN KEY (authorID)
+    authorID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    reID INT UNSIGNED,
+    FOREIGN KEY (reID)
         REFERENCES researchers (reID),
-    FOREIGN KEY (authorID)
+    orgdelID INT UNSIGNED,
+    FOREIGN KEY (orgdelID)
         REFERENCES orgDel (orgdelID)
 );
 
