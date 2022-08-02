@@ -52,19 +52,30 @@ FROM ((users INNER JOIN orgDel ON users.uID = orgDel.orgdelID)
 
 ORDER BY suspendDate ASC;
 
+
 -- 14.
 SELECT pubDate, author, majorTopic, minorTopic, summary, content
 FROM article
-WHERE author = "givenAuthorName"        -- need to change to appropriate PHP syntax to search for author by name
+WHERE author = "givenAuthorName"  -- need to change to appropriate syntax to search for author by name
 ORDER BY pubDate ASC;
+
 
 -- 15.
 
 
 -- 16.
+SELECT rName, cName, COUNT(DISTINCT users.uID) AS NumAuthors, COUNT(aID) AS NumPublications
+FROM (((authors
+		INNER JOIN users ON (authors.reID = users.uID OR authors.orgdelID = users.uID)
+        INNER JOIN article ON article.authorID = authors.authorID)
+        INNER JOIN country ON users.cID = country.cID)
+        INNER JOIN region ON country.rID = region.rID
+GROUP BY country.cID
+ORDER BY rName ASC, NumPublications DESC;    
 
 
 -- 17.
+
 
 
 -- 18.
