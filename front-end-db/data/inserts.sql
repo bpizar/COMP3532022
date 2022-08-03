@@ -150,7 +150,7 @@ INSERT INTO vaccines (name) VALUES
 ('AstraZeneca'),
 ('Johnson & Johnson'); 
 
-INSERT INTO vaccinestat VALUES 
+INSERT INTO vaccineStat VALUES 
 (1,1,100,DEFAULT,DEFAULT),
 (1,2,100,1,DEFAULT),
 (1,3,100,2, 20),
@@ -178,7 +178,7 @@ INSERT INTO researchers VALUES
 (3,DEFAULT),
 (7,DEFAULT);
 
-INSERT INTO orgdel VALUES
+INSERT INTO orgDel VALUES
 (4,DEFAULT),
 (5,DEFAULT);
 
@@ -199,9 +199,9 @@ INSERT INTO authors(reID,orgdelID) VALUES
 (null,4),
 (null,5);
 
-INSERT INTO article (authorID,Author,majorTopic,minorTopic,summary,content,pubDate,active) VALUES
-(1,'Pepe Lepieu','cases of covid among skunks','lack of smell in humans','aaaaaaaaaaaaaaaa','content of: cases of covid among skunks by Pepe Lepieu','2020-02-06',1),
-(3,'A researcher','some research','xtra research','bbbbbbbbbbbbbbb','content of: cases of covid among skunks by Pepe Lepieu','2022-01-01',1),
-(3,'A researcher','some other research','some other xtra research','cccccccccccc','content of: cases of covid among skunks by Pepe Lepieu','2021-02-06',1),
-(2,'Kylian Vail','MajorTop','MinorTop','This is a summary','This is the content of the article','2022-10-28',1),
-(1,'Pepe Lepieu','lack of smell in humans','loss of stink','ddddddddddddd','content of: lack of smell in humans by Pepe Lepieu','2019-12-31',1);
+INSERT INTO article (authorID,Author,majorTopic,minorTopic,summary,content,pubDate) VALUES
+(1,'Pepe Lepieu','cases of covid among skunks','lack of smell in humans','aaaaaaaaaaaaaaaa','content of: cases of covid among skunks by Pepe Lepieu','2020-02-06'),
+(3,'A researcher','some research','xtra research','bbbbbbbbbbbbbbb','content of: cases of covid among skunks by Pepe Lepieu','2022-01-01'),
+(3,'A researcher','some other research','some other xtra research','cccccccccccc','content of: cases of covid among skunks by Pepe Lepieu','2021-02-06'),
+(2,'Kylian Vail','MajorTop','MinorTop','This is a summary','This is the content of the article','2022-10-28'),
+(1,'Pepe Lepieu','lack of smell in humans','loss of stink','ddddddddddddd','content of: lack of smell in humans by Pepe Lepieu','2019-12-31');

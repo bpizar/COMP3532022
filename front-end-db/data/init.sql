@@ -1,5 +1,5 @@
 -- Tables
-USE ProjectC19Main;
+USE zuc353_1;
 
 CREATE TABLE region (
     rID INT UNSIGNED NOT NULL PRIMARY KEY,

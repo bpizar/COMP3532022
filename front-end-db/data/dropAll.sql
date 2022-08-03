@@ -1,4 +1,4 @@
-USE ProjectC19Main;
+USE zuc353_1;
 
 DROP TABLE
 isRemoved, 
@@ -16,6 +16,6 @@ users,
 vaccineStat, 
 vaccines, 
 covid_19stat, 
-prostater, 
+proStaTer, 
 country,
 region;
