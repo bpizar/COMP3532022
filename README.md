@@ -15,3 +15,5 @@ Final Project:
 "Warm-Up Project" contains table creation, data insertion, and queries for the for the initial warm-up project in the course
 
 "front-end-db" contains HTML and PHP code used to build a simple GUI for the database, this is also stored on the ENCS web page assigned to our team
+
+COMP 353 SUMMER 2022
