@@ -1,6 +1,7 @@
-# COMP3532022
-Repository for database class COMP353 at Concordia University.
-Class taken during the SUMMER 2 2022 semester.
+# Covid 19 Vaccination Database
+Repository for COMP353 at Concordia University.
+Design and implementation of a Covid-19 vaccination database using sql.
+The final project involves database interaction through the use of php 
 
 "Final Project" directory contains table creation, data insertion, and queries for the main project
 
