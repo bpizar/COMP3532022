@@ -8,7 +8,7 @@ Final Project:
  - Directory contains table creation, data insertion, and queries for the main project
  - Report attached illustrates the design process, sample queries and their results
  
- *Database Design*
+ **Database Design**
  
  ![](ER_Diagram.png)
 
