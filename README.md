@@ -7,6 +7,9 @@ Design and implementation of a Covid-19 vaccination database using sql.
 Final Project:
  - Directory contains table creation, data insertion, and queries for the main project
  - Report attached illustrates the design process, sample queries and their results
+ 
+ *Database Design*
+ 
  ![](ER_Diagram.png)
 
 "Warm-Up Project" contains table creation, data insertion, and queries for the for the initial warm-up project in the course
