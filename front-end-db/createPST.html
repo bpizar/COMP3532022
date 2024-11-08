@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Create ProStaTer</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <h1>Simple Database App</h1>
+
+    <h2>Add a ProStaTer</h2>
+
+    <form action="createPST.php" method="post">
+        <label for="cID">Enter Country ID</label>
+        <input type="text" name="cID" id="cID">
+        <br>
+        <label for="pstName">Enter ProStaTer Name</label>
+        <input type="text" name="pstName" id="pstName">
+        <br>
+        <label for="Population">Enter Population</label>
+        <input type="text" name="Population" id="Population">
+        <br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+
+    <a href="../index.php">Back to home</a>
+</body>
+
+</html>

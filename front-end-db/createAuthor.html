@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Author</title>
+</head>
+
+<body>
+    <h1>Simple Database App</h1>
+
+    <h2>Add an Author User</h2>
+
+    <form action="createAuthor.php" method="post">
+        <h3>EITHER ENTER Researcher ID OR Organization Delegate ID OR BOTH</h3>
+
+        <label for="reID">reID</label>
+        <input type="text" name="reID" id="reID">
+
+        <label for="orgdelID">orgdeID</label>
+        <input type="text" name="orgdelID" id="orgdelID">
+
+        <br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+
+    <a href="../index.php">Back to home</a>
+</body>
+
+</html>

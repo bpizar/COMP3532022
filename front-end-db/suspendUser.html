@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Suspend User</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <h1>Simple Database App</h1>
+
+    <h2>Suspend a User</h2>
+
+    <form action="suspendUser.php" method="post">
+        <label for="uID">First Name</label>
+        <input type="text" name="uID" id="uID">
+        <br>
+        <label for="suspendDate">Suspend Date (today's date)</label>
+        <input type="date" name="suspendDate" id="suspendDate">
+        <br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+
+    <a href="../index.php">Back to home</a>
+
+</body>
+
+</html>
